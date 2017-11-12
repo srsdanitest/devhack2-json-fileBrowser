@@ -18,9 +18,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    downloadmanager.cpp
+    downloadmanager.cpp \
+    filess.cpp
 
 HEADERS += \
-    downloadmanager.h
+    downloadmanager.h \
+    filess.h
 
 QT += core
