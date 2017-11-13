@@ -18,10 +18,11 @@ void afiseazaNumeCorectat(filess* clasecufisiere,int cautat,
 {
 for(int i=0;i<dimensiune;i++)
     if(afisat[i]==0&&cautat==parentshere[i])
-    {   for(int j=0;j<indent;j++)
-            std::cout<<"  ";
+    {   cout<<"|";
+        for(int j=0;j<indent;j++)
+            std::cout<<"    ";
         if(indent!=0)
-            std::cout<<"-";
+            std::cout<<"|_";
         std::cout<<clasecufisiere[i].returnName()<<endl;
         afisat[i]=1;
         afiseazaNumeCorectat(clasecufisiere,i,parentshere,indent+1,dimensiune,afisat);
@@ -55,8 +56,7 @@ int main(int argc, char **argv)
         filesandfolders.push_back(jsdoc3[i].toObject());
         parentshere.push_back(-1);
     }
-    int ii;
-    for(ii=0;ii<filesandfolders.size();ii++)
+    for(unsigned int ii=0;ii<filesandfolders.size();ii++)
     {
         if(filesandfolders[ii].value("contents").toArray().isEmpty()==false)
         {
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
                 parentshere.push_back(ii);}
         }
     }
-    for(int i=0;i<filesandfolders.size();i++)
+    for(unsigned int i=0;i<filesandfolders.size();i++)
     {
         QJsonObject temp1=filesandfolders[i];
         QString typeS=temp1.value("type").toString();
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     }
     std::cout<<"file_system:\n";
     int *vizitat=new int[fisiere.size()];
-    for(int i=0;i<filesandfolders.size();i++)
+    for(unsigned int i=0;i<filesandfolders.size();i++)
         vizitat[i]=0;
     afiseazaNumeCorectat(&fisiere[0],-1,&parentshere[0],0,fisiere.size(),vizitat);
 
