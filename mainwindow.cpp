@@ -6,14 +6,14 @@
 #include<QTreeWidget>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow)  //default constructor
 {
     ui->setupUi(this);
 }
 
 MainWindow::MainWindow(filess* testt,int dimensiune,QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow)   //custom constructor
 {
     ui->setupUi(this);
     ui->label_2->setText("TopLevelDirectory");

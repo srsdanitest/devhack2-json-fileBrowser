@@ -4,10 +4,10 @@
 using namespace std;
 class filess
 {
-    double id;
-    bool type;
-    string name;
-    long parentID;
+    double id;      //id comes out as double from QJson, even if it's integer. Set to double to avoid int to double conversion
+    bool type;      //true/false, store if we have a file or directory
+    string name;    //name for file/directory
+    long parentID;  //store parentID.
 public:
     filess(double, bool, string, long);
     double getID(){return id;};

@@ -13,7 +13,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    MainWindow(filess*,int,QWidget *parent = 0);
+    MainWindow(filess*,int,QWidget *parent = 0); //create this custom constructor to get the vector with files/directory. int from size of vector
     ~MainWindow();
 
 private:

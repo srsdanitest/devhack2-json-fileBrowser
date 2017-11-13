@@ -7,4 +7,5 @@ filess::filess(double idd, bool tyype=false, string namee="", long parenttID=0 )
     type=tyype;
     name=namee;
     parentID=parenttID;
+    //basic constructor for files or folders
 }
