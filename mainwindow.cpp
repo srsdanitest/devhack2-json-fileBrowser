@@ -35,7 +35,7 @@ MainWindow::MainWindow(filess* testt,int dimensiune,QWidget *parent) :
         else
             iteme[testt[k].returnParentID()]->addChild(iteme[k]);
     }
-
+    tree->resizeColumnToContents(0);
     for(int i=0;i<dimensiune;i++)
     {
         if(testt[i].returnParentID()==-1&&testt[i].returnType()==false)
