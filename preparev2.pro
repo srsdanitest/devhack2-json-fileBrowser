@@ -16,11 +16,12 @@ CONFIG   += console
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    downloadmanager.cpp \
     filess.cpp
 
 HEADERS  += mainwindow.h \
-    downloadmanager.h\
     filess.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    resourceapp.qrc

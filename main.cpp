@@ -4,9 +4,8 @@
 #include<QJsonDocument>
 #include<QJsonArray>
 #include<QJsonObject>
-#include<QFile>
-#include<fstream>
 #include <QTimer>
+#include <QtNetwork>
 #include<iostream>
 #include<string>
 #include<vector>
@@ -17,7 +16,24 @@
 #include "filess.h"
 #include<QMessageBox>
 #include <QtCore>
-#include "qtdownload.h"
+
+void afiseazaNumeCorectat(filess* clasecufisiere,int cautat,
+                          int *parentshere,int indent,int dimensiune, int *afisat)
+{
+for(int i=0;i<dimensiune;i++)
+{
+    if(afisat[i]==0&&cautat==parentshere[i])
+    {   for(int j=0;j<indent;j++)
+            std::cout<<"  ";
+        if(indent!=0)
+            std::cout<<"-";
+        std::cout<<clasecufisiere[i].returnName()<<endl;
+        afisat[i]=1;
+        afiseazaNumeCorectat(clasecufisiere,i,parentshere,indent+1,dimensiune,afisat);
+
+    }
+}
+}
 
 void afiseazaNume(int a, string fn)
 {
@@ -47,25 +63,28 @@ void afiseazaNume(int a, string fn)
 int main(int argc, char **argv)
 {
     QApplication a(argc, argv);
-    QtDownload dl;
-    dl.setTarget("http://www.mready.net/devacademy/input3.json");
 
-    dl.download();
-    //quit when the download is done.
-    QObject::connect(&dl, SIGNAL(done()), &a, SLOT(quit()));
+    QNetworkAccessManager manager;
+    QNetworkRequest req(QUrl("http://www.mready.net/devacademy/input1.json"));
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkReply* reply = manager.get(req);
 
-    vector<filess> fisiere;
-    std::cout<<"\nFile Download Done\n\n";
-    QFile file_obj("input.json");
-    if(!file_obj.open(QIODevice::ReadOnly)){
-        qDebug()<<"Failed to open ";
+    QJsonObject json;
 
-        exit(1);
+    while(!reply->isFinished())
+
+    {
+
+    qApp->processEvents();
+
     }
-    Q_ASSERT(file_obj.open(QFile::ReadOnly));
-    QJsonDocument jsdoc1=QJsonDocument::fromJson(file_obj.readAll());
-    file_obj.close();
+    QByteArray response_data = reply->readAll();
+    QJsonDocument jsdoc1 = QJsonDocument::fromJson(response_data);
+
+    //QJsonDocument jsdoc1=QJsonDocument::fromJson(file_obj.readAll());
+
    // remove( "input.json" );
+    vector<filess> fisiere;
     vector <QJsonObject> filesandfolders;
     vector<int> parentshere;
     QJsonObject jsdoc2=jsdoc1.object();
@@ -150,6 +169,11 @@ int main(int argc, char **argv)
         fisiere.push_back(filess(temp1.value("id").toDouble(),here,nameS.toStdString().c_str(),parentshere[i]));
     }
 
+    std::cout<<"\n\n\n\n";
+    int *vizitat=new int[fisiere.size()];
+    for(int i=0;i<filesandfolders.size();i++)
+        vizitat[i]=0;
+    afiseazaNumeCorectat(&fisiere[0],-1,&parentshere[0],0,fisiere.size(),vizitat);
 
 
     MainWindow w(&fisiere[0],fisiere.size());
