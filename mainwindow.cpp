@@ -16,7 +16,6 @@ MainWindow::MainWindow(filess* testt,int dimensiune,QWidget *parent) :
     ui(new Ui::MainWindow)   //custom constructor
 {
     ui->setupUi(this);
-    ui->label_2->setText("TopLevelDirectory");
     //linia de sub pentru tree
     QTreeWidget * tree = ui->treeWidget;
     vector<QTreeWidgetItem *> iteme;
