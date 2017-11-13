@@ -4,12 +4,16 @@
 using namespace std;
 class filess
 {
-    long id;
+    double id;
     bool type;
     string name;
     long parentID;
 public:
-    filess(long, bool, string, long);
+    filess(double, bool, string, long);
+    double getID(){return id;};
+    bool returnType(){return type;}
+    string returnName(){return name;};
+    long returnParentID(){return parentID;};
 };
 
 #endif // FILESS_H

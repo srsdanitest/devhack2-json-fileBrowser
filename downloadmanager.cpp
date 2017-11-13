@@ -12,40 +12,26 @@ DownloadManager::DownloadManager()
 
 void DownloadManager::execute()
 {
-    // get the argument including program's name
+    // argument + program's name
     QStringList args = QCoreApplication::instance()->arguments();
 
-    // skip the first argument, which is the program's name
+    // skip first arg, program name
     args.takeFirst();
 
     if (args.isEmpty()) {
-        printf("Qt Download example - downloads all URLs in parallel\n"
-               "Usage: download url1 [url2... urlN]\n"
-               "\n"
-               "Downloads the URLs passed in the command-line to the local directory\n"
-               "If the target file already exists, a .0, .1, .2, etc. is appended to\n"
-               "differentiate.\n");
+        printf("QtDown");
         QCoreApplication::instance()->quit();
         return;
     }
-
-    // process each url starting from the 2nd one
+    // process url
     foreach (QString arg, args) {
-
         // QString::toLocal8Bit()
-        //  - local 8-bit representation of the string as a QByteArray
-        // Qurl::fromEncoded(QByteArray)
-        //  - Parses input and returns the corresponding QUrl.
-        //    input is assumed to be in encoded form,
-        //    containing only ASCII characters.
-
         QUrl url = QUrl::fromEncoded(arg.toLocal8Bit());
 
         // makes a request
         doDownload(url);
     }
 }
-
 // Constructs a QList of QNetworkReply
 void DownloadManager::doDownload(const QUrl &url)
 {
@@ -65,7 +51,7 @@ QString DownloadManager::saveFileName(const QUrl &url)
     QString path = url.path();
     QString basename = QFileInfo(path).fileName();
 
-    basename = "download"; //adaugat de mine
+    basename = "download";
     return basename;
 }
 
@@ -73,15 +59,15 @@ void DownloadManager::downloadFinished(QNetworkReply *reply)
 {
     QUrl url = reply->url();
     if (reply->error()) {
-        fprintf(stderr, "Download of %s failed: %s\n",
+        fprintf(stderr, "Downloaded file: %s failed: %s\n",
                 url.toEncoded().constData(),
                 qPrintable(reply->errorString()));
     } else {
         QString filename = "input.json";
         //QString filename = saveFileName(url);
-        if (saveToDisk(filename, reply))
+        /*if (saveToDisk(filename, reply))
             printf("Download of %s succeeded (saved to %s)\n",
-                   url.toEncoded().constData(), qPrintable(filename));
+                   url.toEncoded().constData(), qPrintable(filename));*/
     }
 
     currentDownloads.removeAll(reply);
